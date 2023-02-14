@@ -26,7 +26,7 @@ export default function App() {
 						presentation: 'modal',
 						animationTypeForReplace: 'push',
 						animation: 'slide_from_right',
-						animationDuration: 2000,
+						animationDuration: 1000,
 					}}
 				/>
 				<Stack.Screen name="Home" component={HomeScreen} />

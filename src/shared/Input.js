@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { TextInput, Pressable, View } from 'react-native';
 import { useTogglePasswordVisibility } from '../../utils/hooks/useTogglePasswordVisibility';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-const Input = ({ type, secure, placeholder }) => {
-	const [input, setInput] = useState('');
+const Input = ({ type, secure, placeholder, setInput, val, width }) => {
 	const { passwordVisibility, rightIcon, handlePasswordVisibility } =
 		useTogglePasswordVisibility();
 	return (
@@ -15,16 +14,19 @@ const Input = ({ type, secure, placeholder }) => {
 				shadowOpacity: 0.25,
 				shadowRadius: 3.84,
 				elevation: 5,
+				width: width ? width : '83.333333%',
+				marginLeft: 'auto',
+				marginRight: 'auto',
 			}}
-			className="p-2 mt-3 bg-white rounded-lg w-10/12 border border-white flex-row items-center justify-between"
+			className="p-2 mt-3 bg-white rounded-lg border border-white flex-row items-center justify-between"
 		>
 			<TextInput
 				onChangeText={setInput}
 				keyboardType={type}
-				value={input}
+				value={val}
 				placeholder={placeholder}
 				secureTextEntry={secure ? passwordVisibility : false}
-				className="px-4 bg-white"
+				className="px-4 bg-white w-11/12"
 			/>
 			{secure && (
 				<Pressable onPress={handlePasswordVisibility}>
