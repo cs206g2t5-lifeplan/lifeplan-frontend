@@ -1,13 +1,36 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import './dist/output.css'; // Add this for web support ONLY
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+import SignUpScreen from './src/auth/SignUpScreen';
+import HomeScreen from './src/home/HomeScreen';
+import SignInScreen from './src/auth/SignInScreen';
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
 	return (
-		<View className="flex-1 items-center justify-center bg-black">
-			<Text className="text-white">Hello World!</Text>
-			<Text className="text-white">Nice to meet you!</Text>
-			<StatusBar style="auto" />
-		</View>
+		<NavigationContainer>
+			<Stack.Navigator>
+				<Stack.Screen
+					name="SignIn"
+					component={SignInScreen}
+					options={{
+						headerShown: false,
+					}}
+				/>
+				<Stack.Screen
+					name="SignUp"
+					component={SignUpScreen}
+					options={{
+						headerShown: false,
+						presentation: 'modal',
+						animationTypeForReplace: 'push',
+						animation: 'slide_from_right',
+						animationDuration: 2000,
+					}}
+				/>
+				<Stack.Screen name="Home" component={HomeScreen} />
+			</Stack.Navigator>
+		</NavigationContainer>
 	);
 }
