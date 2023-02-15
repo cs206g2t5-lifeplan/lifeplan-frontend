@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import SignUpScreen from './src/auth/SignUpScreen';
 import HomeScreen from './src/home/HomeScreen';
 import SignInScreen from './src/auth/SignInScreen';
+import Footer from './src/shared/Footer';
 
 const Stack = createNativeStackNavigator();
 
@@ -29,7 +30,13 @@ export default function App() {
 						animationDuration: 1000,
 					}}
 				/>
-				<Stack.Screen name="Home" component={HomeScreen} />
+				<Stack.Screen
+					name="Home"
+					component={Footer}
+					options={{
+						headerShown: false,
+					}}
+				/>
 			</Stack.Navigator>
 		</NavigationContainer>
 	);

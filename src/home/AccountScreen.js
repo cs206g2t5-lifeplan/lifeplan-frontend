@@ -1,10 +1,12 @@
+import React from 'react';
 import { View, Text, TextInput, Button } from 'react-native';
-import Footer from '../shared/Footer';
 
-export default function HomeScreen() {
+const AccountScreen = () => {
 	return (
 		<View className="w-screen h-screen">
-			<Text>Home</Text>
+			<Text>Account</Text>
 		</View>
 	);
-}
+};
+
+export default AccountScreen;
