@@ -4,6 +4,7 @@ import ellipseWhite from '../../assets/EllipseWhiteRight.png';
 import ellipsePink from '../../assets/EllipsePinkRight.png';
 import Input from '../shared/Input';
 import Buttons from '../shared/Buttons';
+import Radio from '../shared/Radio';
 
 const SignUpScreen = ({ navigation }) => {
 	const [firstName, setFirstName] = useState('');
@@ -12,6 +13,12 @@ const SignUpScreen = ({ navigation }) => {
 	const [phone, setPhone] = useState('');
 	const [password, setPassword] = useState('');
 	const [passwordConfirm, setPasswordConfirm] = useState('');
+	const [selected, setSelected] = useState('');
+
+	const opt = [
+		{ id: '1', label: 'Caregiver', value: 'Caregiver' },
+		{ id: '2', label: 'Care Recipient', value: 'Care Recipient' },
+	];
 
 	return (
 		<View style={{ backgroundColor: '#A8DCD9' }} className="w-screen h-screen">
@@ -74,7 +81,21 @@ const SignUpScreen = ({ navigation }) => {
 					val={passwordConfirm}
 					setInput={setPasswordConfirm}
 				/>
-				<View className="w-screen h-14" />
+				<View className="w-11/12 flex-row pt-4">
+					<Text
+						className="w-1/2 pt-3 pl-4 text-lg"
+						style={{ color: '#60435F' }}
+					>
+						I am a:
+					</Text>
+					<View className="w-1/2 flex-col items-center">
+						<Radio
+							options={opt}
+							setSelected={setSelected}
+							selected={selected}
+						/>
+					</View>
+				</View>
 				<Buttons
 					title="Register"
 					onPress={() => navigation.navigate('Home')}
