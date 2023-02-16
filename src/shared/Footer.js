@@ -13,7 +13,12 @@ const Tab = createBottomTabNavigator();
 
 const Footer = () => {
 	return (
-		<Tab.Navigator>
+		<Tab.Navigator
+			initialRouteName="Homepage"
+			activeColor="#f0edf6"
+			inactiveColor="#3e2465"
+			barStyle={{ paddingBottom: 48 }}
+		>
 			<Tab.Screen
 				name="Account"
 				component={AccountScreen}
@@ -39,7 +44,7 @@ const Footer = () => {
 					),
 				}}
 			/>
-			<Tab.View name="Care Mode" />
+			<Tab.Screen name="Care Mode" component={SignInScreen} />
 		</Tab.Navigator>
 	);
 };
