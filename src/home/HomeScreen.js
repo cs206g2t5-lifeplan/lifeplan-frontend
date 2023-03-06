@@ -2,14 +2,17 @@ import { useState } from 'react';
 import {
 	View,
 	Text,
-	TextInput,
-	Button,
+	ImageBackground,
 	ScrollView,
-	StyleSheet,
+	Image,
+	Pressable,
 } from 'react-native';
 import Prompt from '../shared/Prompt';
+import Add from '../../assets/add.png';
+import Routine from '../../assets/routine.png';
+import Tips from '../../assets/tips.png';
 
-export default function HomeScreen() {
+const HomeScreen = ({ navigation }) => {
 	const [width, setWidth] = useState(0);
 	const [shown, setShown] = useState(0);
 
@@ -48,7 +51,7 @@ export default function HomeScreen() {
 			>
 				Welcome
 			</Text>
-			<ScrollView contentContainerStyle="flex-1 flex-col items-center  w-screen h-screen">
+			<ScrollView contentContainerStyle="flex-1 flex-col items-center w-screen h-screen">
 				<View
 					className="flex-1 self-center rounded-xl mt-4 w-10/12"
 					onLayout={(event) => find_dimensions(event.nativeEvent.layout)}
@@ -101,15 +104,58 @@ export default function HomeScreen() {
 						></View>
 					</View>
 				</View>
+				<View className="w-10/12 flex-1 flex-row items-center justify-center mx-auto mt-2">
+					<View
+						className="rounded-xl mt-4 w-1/2 mr-1"
+						style={{ backgroundColor: '#D67AB1', height: width / 2 }}
+					>
+						<Image
+							source={Add}
+							style={{ width: 54, height: 57 }}
+							className="self-end mr-4 mt-4"
+						/>
+						<Text className="text-white text-2xl font-bold ml-4 mb-4">
+							Add{'\n'}Activity
+						</Text>
+					</View>
+					<View
+						className="rounded-xl mt-4 w-1/2 ml-1"
+						style={{ backgroundColor: '#D67AB1', height: width / 2 }}
+					>
+						<Image
+							source={Routine}
+							style={{ width: 54, height: 57 }}
+							className="self-end mr-4 mt-4"
+						/>
+						<Text className="text-white text-2xl font-bold ml-4 mb-4">
+							View{'\n'}Routine
+						</Text>
+					</View>
+				</View>
 				<View
-					className="flex-1 self-center rounded-xl mt-4 w-10/12"
-					style={{ backgroundColor: '#D67AB1', height: width }}
-				></View>
-				<View
-					className="flex-1 self-center rounded-xl mt-4 w-10/12 mb-32"
-					style={{ backgroundColor: '#D67AB1', height: width }}
-				></View>
+					className="w-11/12 self-center mt-4 mb-32"
+					style={{ height: width / 2 }}
+				>
+					<Pressable onPress={() => navigation.navigate('Tips')}>
+						<ImageBackground
+							className="w-full h-full items-center self-center rounded-xl"
+							style={{ height: width / 2 }}
+							source={Tips}
+							resizeMethod="scale"
+							resizeMode="stretch"
+						>
+							<Text
+								className="text-2xl font-bold self-end mr-4 mt-4 z-10"
+								style={{ color: '#60435F' }}
+							>
+								Care Tips
+							</Text>
+						</ImageBackground>
+					</Pressable>
+				</View>
 			</ScrollView>
 		</View>
 	);
-}
+};
+
+export default HomeScreen;

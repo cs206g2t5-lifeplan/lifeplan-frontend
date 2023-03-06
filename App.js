@@ -2,12 +2,12 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import SignUpScreen from './src/auth/SignUpScreen';
-import HomeScreen from './src/home/HomeScreen';
 import SignInScreen from './src/auth/SignInScreen';
 import Footer from './src/shared/Footer';
 import LinkCaregiverScreen from './src/auth/LinkCaregiverScreen';
 import LinkCareRecipientScreen from './src/auth/LinkCareRecipientScreen';
 import CareRecipientConfirmationScreen from './src/auth/CareRecipientConfirmationScreen';
+import TipsScreen from './src/home/TipsScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -57,6 +57,13 @@ export default function App() {
 				<Stack.Screen
 					name="Care Recipient Confirmation"
 					component={CareRecipientConfirmationScreen}
+					options={{
+						headerShown: false,
+					}}
+				/>
+				<Stack.Screen
+					name="Tips"
+					component={TipsScreen}
 					options={{
 						headerShown: false,
 					}}
