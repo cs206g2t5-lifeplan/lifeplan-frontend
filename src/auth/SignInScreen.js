@@ -37,7 +37,7 @@ const SignInScreen = ({ navigation }) => {
 				<View className="w-screen h-14" />
 				<Buttons
 					title="Sign In"
-					onPress={() => navigation.navigate('Home')}
+					onPress={() => navigation.navigate('Homepage')}
 					isDark={true}
 				/>
 				<Buttons

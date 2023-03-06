@@ -69,7 +69,7 @@ const CareRecipientConfirmationScreen = ({ navigation }) => {
 					<View className="w-1/2 flex-1 items-center">
 						<Buttons
 							title="Confirm"
-							onPress={() => navigation.navigate('Home')}
+							onPress={() => navigation.navigate('Homepage')}
 							isDark={true}
 						/>
 					</View>

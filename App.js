@@ -34,7 +34,7 @@ export default function App() {
 					}}
 				/>
 				<Stack.Screen
-					name="Home"
+					name="Homepage"
 					component={Footer}
 					options={{
 						headerShown: false,
