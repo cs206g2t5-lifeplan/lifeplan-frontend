@@ -69,6 +69,7 @@ const Footer = () => {
 					tabBarIcon: ({ color, size }) => (
 						<Image source={Account} style={{ width: 30, height: 34 }} />
 					),
+					headerShown: false,
 				}}
 			/>
 		</Tab.Navigator>
