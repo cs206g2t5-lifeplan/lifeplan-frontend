@@ -28,7 +28,6 @@ const CameraComp = ({ navigate }) => {
 					barCodeTypes: [BarCodeScanner.Constants.BarCodeType.qr],
 				}}
 				onBarCodeScanned={navigate}
-				onMountError={(error) => console.log(error)}
 			></Camera>
 		</View>
 	);

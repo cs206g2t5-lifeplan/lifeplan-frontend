@@ -2,18 +2,11 @@ import React, { useState } from 'react';
 import { View, Image, Text } from 'react-native';
 import ellipseWhite from '../../assets/EllipseWhiteRight.png';
 import ellipsePink from '../../assets/EllipsePinkRight.png';
-import grandma from '../../assets/grandma.jpeg';
 import Buttons from '../shared/Buttons';
+import QR from '../shared/QR';
 
-const CareRecipientConfirmationScreen = ({ navigation }) => {
-	const [pName, setPName] = useState('Khoo Heng Puat');
-	const [phone, setPhone] = useState('+65 8123 4567');
-	const [dWidth, setWidth] = useState(0);
-
-	const find_dimesions = (layout) => {
-		const { x, y, width, height } = layout;
-		setWidth(width);
-	};
+const LinkCaregiverScreen = ({ navigation }) => {
+	const [qr, setQr] = useState('default');
 
 	return (
 		<View style={{ backgroundColor: '#A8DCD9' }} className="w-screen h-screen">
@@ -24,51 +17,41 @@ const CareRecipientConfirmationScreen = ({ navigation }) => {
 					LifePlan
 				</Text>
 				<Text className="text-black font-bold text-4xl self-start pl-8 pb-4">
-					Link to{'\n'}Care Recipient
+					Connect
 				</Text>
 				<View
-					className="w-10/12 bg-white rounded-xl flex-1 items-center justify-center mb-4 py-8"
+					className="rounded-xl w-10/12 h-1/3 bg-white p-4"
 					style={{
 						shadowColor: '#000',
 						shadowOffset: { width: 0, height: 2 },
 						shadowOpacity: 0.25,
 						shadowRadius: 3.84,
 						elevation: 5,
-						minHeight: dWidth,
-						maxHeight: dWidth,
 					}}
-					onLayout={(event) => find_dimesions(event.nativeEvent.layout)}
 				>
-					<View className="flex-1 items-center justify-center">
-						<Image
-							style={{ width: 160, height: 160 }}
-							className="rounded-full"
-							source={grandma}
-						/>
-					</View>
+					<QR value={qr} />
 					<Text
-						className="font-bold text-xl pt-4 pb-2"
+						className="font-bold text-3xl text-center"
 						style={{ color: '#60435F' }}
 					>
-						Name: {pName}
-					</Text>
-					<Text className="font-bold text-xl pb-2" style={{ color: '#60435F' }}>
-						Phone: {phone}
+						Scan code with your caregiver's account to log in
 					</Text>
 				</View>
-				<Text
-					className="text-xl w-10/12 text-center font-bold"
-					style={{ color: '#60435F' }}
-				>
-					Please confirm Care Recipient's details
-				</Text>
+				<View className="w-screen flex-1 items-center">
+					<Buttons
+						title="Regenerate QR Code"
+						onPress={() => {
+							setQr('default');
+						}}
+					/>
+				</View>
 				<View className="w-10/12 flex-1 flex-row">
 					<View className="w-1/2 flex-1 items-center">
 						<Buttons title="Back" onPress={() => navigation.goBack()} />
 					</View>
 					<View className="w-1/2 flex-1 items-center">
 						<Buttons
-							title="Confirm"
+							title="Link Later"
 							onPress={() => navigation.navigate('Home')}
 							isDark={true}
 						/>
@@ -79,4 +62,4 @@ const CareRecipientConfirmationScreen = ({ navigation }) => {
 	);
 };
 
-export default CareRecipientConfirmationScreen;
+export default LinkCaregiverScreen;
