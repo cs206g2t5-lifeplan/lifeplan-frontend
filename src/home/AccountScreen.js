@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, Image, Pressable } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import CareGiver from '../../assets/caregiver.png';
 import Buttons from '../shared/Buttons';
+import Modal from '../shared/Modal';
 
 const AccountScreen = ({ navigation }) => {
+	const [shown, setShown] = useState(false);
 	return (
 		<View className="w-screen h-screen flex-1 items-center bg-white">
 			<View className="h-10" />
@@ -62,9 +64,20 @@ const AccountScreen = ({ navigation }) => {
 			/>
 			<Buttons
 				title="Logout"
-				onPress={() => navigation.navigate('SignIn')}
+				onPress={() => {
+					setShown(true);
+					route.params.updateShown(false);
+				}}
 				isDark={false}
 				borderColor="#D67AB1"
+			/>
+			<Modal
+				shown={shown}
+				heading="Confirm Logout?"
+				btnRight={() => navigation.navigate('SignIn')}
+				btnLeftTitle="Cancel"
+				btnRightTitle="Logout"
+				btnLeft={() => setShown(false)}
 			/>
 		</View>
 	);

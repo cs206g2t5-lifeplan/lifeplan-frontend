@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Image } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from '../home/HomeScreen';
@@ -13,6 +13,8 @@ import MessagesScreen from '../home/MessagesScreen';
 const Tab = createBottomTabNavigator();
 
 const Footer = () => {
+	const [shown, setShown] = useState(true);
+
 	return (
 		<Tab.Navigator
 			initialRouteName="Home"
@@ -24,6 +26,9 @@ const Footer = () => {
 					paddingBottom: 10,
 					paddingTop: 10,
 					height: 80,
+					elevation: 1,
+					zIndex: 1,
+					display: shown ? 'flex' : 'none',
 				},
 				tabBarActiveTintColor: '#60435F',
 			}}
