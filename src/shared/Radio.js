@@ -4,6 +4,7 @@ import { View, Text, Pressable, Animated } from 'react-native';
 const Radio = ({ options, selected, setSelected }) => {
 	const [translate, setTranslate] = useState(9999);
 	const [yDim, setYDim] = useState(0);
+	const [display, setDisplay] = useState('none');
 	const translateAnim = useRef(new Animated.Value(0)).current;
 
 	const find_dimesions = (layout) => {
@@ -13,6 +14,7 @@ const Radio = ({ options, selected, setSelected }) => {
 
 	const optionSelected = (index) => {
 		setTranslate((yDim / options.length) * index);
+		setDisplay('flex');
 		Animated.timing(translateAnim, {
 			toValue: (yDim / options.length) * index,
 			duration: 300,
@@ -33,6 +35,7 @@ const Radio = ({ options, selected, setSelected }) => {
 					borderColor: '#60435F',
 					backgroundColor: 'rgba(255, 255, 255, 0.25)',
 					transform: [{ translateY: translateAnim }],
+					display,
 				}}
 			></Animated.View>
 			{options.map((option, index) => {

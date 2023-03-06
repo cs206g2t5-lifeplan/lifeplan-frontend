@@ -1,5 +1,4 @@
 import { View, Text, TextInput, Button } from 'react-native';
-import Footer from '../shared/Footer';
 
 export default function HomeScreen() {
 	return (

@@ -20,6 +20,14 @@ const SignUpScreen = ({ navigation }) => {
 		{ id: '2', label: 'Care Recipient', value: 'Care Recipient' },
 	];
 
+	const linkUser = () => {
+		if (selected === 'Caregiver') {
+			navigation.navigate('Link Care Recipient');
+		} else if (selected === 'Care Recipient') {
+			navigation.navigate('Link Caregiver');
+		}
+	};
+
 	return (
 		<View style={{ backgroundColor: '#A8DCD9' }} className="w-screen h-screen">
 			<Image className="absolute bottom-0 left-0" source={ellipseWhite} />
@@ -96,11 +104,7 @@ const SignUpScreen = ({ navigation }) => {
 						/>
 					</View>
 				</View>
-				<Buttons
-					title="Register"
-					onPress={() => navigation.navigate('Home')}
-					isDark={true}
-				/>
+				<Buttons title="Register" onPress={linkUser} isDark={true} />
 				<Buttons
 					title="Back to Sign In"
 					onPress={() => navigation.navigate('SignIn')}
