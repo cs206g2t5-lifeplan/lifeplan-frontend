@@ -7,7 +7,6 @@ import Footer from './src/shared/Footer';
 import LinkCaregiverScreen from './src/auth/LinkCaregiverScreen';
 import LinkCareRecipientScreen from './src/auth/LinkCareRecipientScreen';
 import CareRecipientConfirmationScreen from './src/auth/CareRecipientConfirmationScreen';
-import TipsScreen from './src/home/TipsScreen';
 import Modal from './src/shared/Modal';
 
 const Stack = createNativeStackNavigator();
@@ -58,13 +57,6 @@ export default function App() {
 				<Stack.Screen
 					name="Care Recipient Confirmation"
 					component={CareRecipientConfirmationScreen}
-					options={{
-						headerShown: false,
-					}}
-				/>
-				<Stack.Screen
-					name="Tips"
-					component={TipsScreen}
 					options={{
 						headerShown: false,
 					}}

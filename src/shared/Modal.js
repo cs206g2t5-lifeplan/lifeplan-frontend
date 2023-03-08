@@ -40,12 +40,14 @@ const Modal = ({ route, navigation }) => {
 				}}
 			></Pressable>
 			<View
-				className="w-screen items-center justify-center bg-white rounded-2xl h-1/3 border"
+				className="w-screen items-center justify-center bg-white h-1/3 border"
 				style={{
 					display: params.shown ? 'flex' : 'none',
 					position: 'absolute',
 					bottom: 0,
 					borderColor: '#60435F',
+					borderTopRightRadius: 20,
+					borderTopLeftRadius: 20,
 				}}
 			>
 				<Text className="font-bold text-m" style={{ color: '#60435F' }}>

@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { Image, LogBox } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import HomeScreen from '../home/HomeScreen';
 import Account from '../../assets/account.png';
 import Home from '../../assets/home.png';
 import Care from '../../assets/care.png';
 import Emergency from '../../assets/emergency.png';
 import AccountScreen from '../home/AccountScreen';
 import MessagesScreen from '../home/MessagesScreen';
+import HomeStack from './HomeStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -57,7 +57,7 @@ const Footer = () => {
 			/>
 			<Tab.Screen
 				name="Home"
-				component={HomeScreen}
+				component={HomeStack}
 				options={{
 					tabBarIcon: ({ color, size }) => (
 						<Image source={Home} style={{ width: 35, height: 30 }} />

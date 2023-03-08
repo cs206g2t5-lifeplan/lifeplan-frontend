@@ -105,9 +105,10 @@ const HomeScreen = ({ navigation }) => {
 					</View>
 				</View>
 				<View className="w-10/12 flex-1 flex-row items-center justify-center mx-auto mt-2">
-					<View
+					<Pressable
 						className="rounded-xl mt-4 w-1/2 mr-1"
 						style={{ backgroundColor: '#D67AB1', height: width / 2 }}
+						onPress={() => navigation.navigate('Add Activity')}
 					>
 						<Image
 							source={Add}
@@ -117,10 +118,11 @@ const HomeScreen = ({ navigation }) => {
 						<Text className="text-white text-2xl font-bold ml-4 mb-4">
 							Add{'\n'}Activity
 						</Text>
-					</View>
-					<View
+					</Pressable>
+					<Pressable
 						className="rounded-xl mt-4 w-1/2 ml-1"
 						style={{ backgroundColor: '#D67AB1', height: width / 2 }}
+						onPress={() => navigation.navigate('View Activity')}
 					>
 						<Image
 							source={Routine}
@@ -130,7 +132,7 @@ const HomeScreen = ({ navigation }) => {
 						<Text className="text-white text-2xl font-bold ml-4 mb-4">
 							View{'\n'}Routine
 						</Text>
-					</View>
+					</Pressable>
 				</View>
 				<View
 					className="w-11/12 self-center mt-4 mb-32"
