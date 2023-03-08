@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, Pressable, LogBox } from 'react-native';
+import { View, Text, Pressable, LogBox } from 'react-native';
 import Buttons from './Buttons';
 
 const Modal = ({ route, navigation }) => {

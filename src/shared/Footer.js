@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { Image, View } from 'react-native';
+import { Image, LogBox } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from '../home/HomeScreen';
-import SignInScreen from '../auth/SignInScreen';
 import Account from '../../assets/account.png';
 import Home from '../../assets/home.png';
 import Care from '../../assets/care.png';
@@ -13,6 +12,8 @@ import MessagesScreen from '../home/MessagesScreen';
 const Tab = createBottomTabNavigator();
 
 const Footer = () => {
+	LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+	LogBox.ignoreAllLogs(); //Ignore all log notifications
 	const [shown, setShown] = useState(true);
 
 	return (
@@ -35,7 +36,13 @@ const Footer = () => {
 		>
 			<Tab.Screen
 				name="Care Mode"
-				component={SignInScreen}
+				component={() => null}
+				listeners={() => ({
+					tabPress: (e) => {
+						e.preventDefault(); // Prevents navigation
+						// Your code here for when you press the tab
+					},
+				})}
 				options={{
 					tabBarIcon: ({ color, size }) => {
 						return (
