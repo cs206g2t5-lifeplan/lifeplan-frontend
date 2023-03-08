@@ -25,7 +25,10 @@ const AccountScreen = ({ navigation }) => {
 					elevation: 5,
 				}}
 			>
-				<Pressable className="w-1/6 ml-8" onPress={() => navigation.goBack()}>
+				<Pressable
+					className="w-1/6 ml-8"
+					onPress={() => navigation.navigate('Home')}
+				>
 					<MaterialCommunityIcons
 						name="arrow-left"
 						size={32}

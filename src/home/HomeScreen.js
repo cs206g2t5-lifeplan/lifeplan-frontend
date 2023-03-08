@@ -114,6 +114,8 @@ const HomeScreen = ({ navigation }) => {
 							source={Add}
 							style={{ width: 54, height: 57 }}
 							className="self-end mr-4 mt-4"
+							resizeMethod="scale"
+							resizeMode="stretch"
 						/>
 						<Text className="text-white text-2xl font-bold ml-4 mb-4">
 							Add{'\n'}Activity
@@ -128,6 +130,8 @@ const HomeScreen = ({ navigation }) => {
 							source={Routine}
 							style={{ width: 54, height: 57 }}
 							className="self-end mr-4 mt-4"
+							resizeMethod="scale"
+							resizeMode="stretch"
 						/>
 						<Text className="text-white text-2xl font-bold ml-4 mb-4">
 							View{'\n'}Routine
