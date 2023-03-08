@@ -23,14 +23,14 @@ const Footer = () => {
 			inactiveColor="#3e2465"
 			screenOptions={{
 				tabBarStyle: {
-					borderRadius: 30,
 					paddingBottom: 10,
-					borderCurve: 1,
 					paddingTop: 10,
 					height: 80,
 					elevation: 1,
 					zIndex: 1,
 					display: shown ? 'flex' : 'none',
+					borderTopEndRadius: 30,
+					borderTopLeftRadius: 30,
 				},
 			}}
 		>
