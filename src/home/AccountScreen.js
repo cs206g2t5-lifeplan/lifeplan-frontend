@@ -7,6 +7,10 @@ import Modal from '../shared/Modal';
 
 const AccountScreen = ({ navigation }) => {
 	const [shown, setShown] = useState(false);
+
+	const navigateSignin = () => navigation.navigate('SignIn');
+	const setFalse = () => setShown(false);
+
 	return (
 		<View className="w-screen h-screen flex-1 items-center bg-white">
 			<View className="h-10" />
@@ -65,19 +69,17 @@ const AccountScreen = ({ navigation }) => {
 			<Buttons
 				title="Logout"
 				onPress={() => {
-					setShown(true);
-					route.params.updateShown(false);
+					navigation.navigate('Modal', {
+						shown: { shown },
+						heading: 'Confirm Logout?',
+						btnRight: { navigateSignin },
+						btnLeftTitle: 'Cancel',
+						btnRightTitle: 'Logout',
+						btnLeft: { setFalse },
+					});
 				}}
 				isDark={false}
 				borderColor="#D67AB1"
-			/>
-			<Modal
-				shown={shown}
-				heading="Confirm Logout?"
-				btnRight={() => navigation.navigate('SignIn')}
-				btnLeftTitle="Cancel"
-				btnRightTitle="Logout"
-				btnLeft={() => setShown(false)}
 			/>
 		</View>
 	);

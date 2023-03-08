@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Image } from 'react-native';
+import { Image, View } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from '../home/HomeScreen';
 import SignInScreen from '../auth/SignInScreen';
@@ -24,13 +24,13 @@ const Footer = () => {
 				tabBarStyle: {
 					borderRadius: 30,
 					paddingBottom: 10,
+					borderCurve: 1,
 					paddingTop: 10,
 					height: 80,
 					elevation: 1,
 					zIndex: 1,
 					display: shown ? 'flex' : 'none',
 				},
-				tabBarActiveTintColor: '#60435F',
 			}}
 		>
 			<Tab.Screen

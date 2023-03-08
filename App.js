@@ -8,13 +8,14 @@ import LinkCaregiverScreen from './src/auth/LinkCaregiverScreen';
 import LinkCareRecipientScreen from './src/auth/LinkCareRecipientScreen';
 import CareRecipientConfirmationScreen from './src/auth/CareRecipientConfirmationScreen';
 import TipsScreen from './src/home/TipsScreen';
+import Modal from './src/shared/Modal';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
 	return (
 		<NavigationContainer>
-			<Stack.Navigator>
+			<Stack.Navigator screenOptions={{ presentation: 'transparentModal' }}>
 				<Stack.Screen
 					name="SignIn"
 					component={SignInScreen}
@@ -67,6 +68,18 @@ export default function App() {
 					options={{
 						headerShown: false,
 					}}
+				/>
+				<Stack.Screen
+					name="Modal"
+					component={Modal}
+					options={{
+						tabBarVisible: false,
+						headerShown: false,
+						animationTypeForReplace: 'push',
+						animation: 'slide_from_bottom',
+						animationDuration: 1000,
+					}}
+					mode="modal"
 				/>
 			</Stack.Navigator>
 		</NavigationContainer>

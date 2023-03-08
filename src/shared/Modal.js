@@ -1,38 +1,76 @@
-import React from 'react';
-import { View, Text, TextInput } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, TextInput, Pressable, LogBox } from 'react-native';
 import Buttons from './Buttons';
 
-const Modal = ({
-	shown,
-	heading,
-	btnLeft,
-	btnRight,
-	btnLeftTitle,
-	btnRightTitle,
-}) => (
-	<View
-		className="w-screen items-center justify-center bg-white rounded-2xl h-1/3 border"
-		style={{
-			display: shown ? 'flex' : 'none',
-			position: 'absolute',
-			bottom: -0,
-			elevation: 999,
-			zIndex: 999,
-		}}
-	>
-		<Text className="font-bold text-m" style={{ color: '#60435F' }}>
-			{heading}
-		</Text>
-		<View className="mx-auto flex-row items-center justify-center w-screen">
-			<View className="w-1/2 flex-1 items-center">
-				<Buttons isDark={false} title={btnLeftTitle} onPress={btnLeft} />
-			</View>
-			<View className="w-1/2 flex-1 items-center">
-				<Buttons isDark={true} title={btnRightTitle} onPress={btnRight} />
+const Modal = ({ route, navigation }) => {
+	LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+	LogBox.ignoreAllLogs(); //Ignore all log notifications
+	const [params, setParams] = useState({
+		shown: false,
+		heading: '',
+		btnLeftTitle: '',
+		btnRightTitle: '',
+		btnRight: () => {},
+	});
+	const [shown, setShown] = useState(true);
+
+	useEffect(() => {
+		if (route.params) {
+			setParams(route.params);
+			// Post updated, do something with `route.params.post`
+			// For example, send the post to the server
+		}
+	}, [route.params]);
+
+	useEffect(() => {
+		if (!shown) {
+			setTimeout(() => {
+				navigation.goBack();
+			}, 50);
+		}
+	}, [shown]);
+
+	return (
+		<View className="w-screen h-full">
+			<Pressable
+				className="w-screen h-full bg-black"
+				style={{ opacity: 0.4, display: shown ? 'flex' : 'none' }}
+				onPress={() => {
+					setShown(false);
+				}}
+			></Pressable>
+			<View
+				className="w-screen items-center justify-center bg-white rounded-2xl h-1/3 border"
+				style={{
+					display: params.shown ? 'flex' : 'none',
+					position: 'absolute',
+					bottom: 0,
+					borderColor: '#60435F',
+				}}
+			>
+				<Text className="font-bold text-m" style={{ color: '#60435F' }}>
+					{params.heading}
+				</Text>
+				<View className="mx-auto flex-row items-center justify-center w-screen">
+					<View className="w-1/2 flex-1 items-center">
+						<Buttons
+							isDark={false}
+							title={params.btnLeftTitle}
+							onPress={() => setShown(false)}
+						/>
+					</View>
+					<View className="w-1/2 flex-1 items-center">
+						<Buttons
+							isDark={true}
+							title={params.btnRightTitle}
+							onPress={params.btnRight.navigateSignin}
+						/>
+					</View>
+				</View>
 			</View>
 		</View>
-	</View>
-);
+	);
+};
 
 Modal.options = (props) => {
 	return {
