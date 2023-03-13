@@ -8,6 +8,8 @@ import Clothes from '../../assets/clothes.png';
 import Activities from '../shared/Activities';
 import Water from '../../assets/water.png';
 import Lunch from '../../assets/lunch.png';
+import Custom from '../../assets/custom.png';
+import New from '../../assets/new.png';
 
 const data = [
 	{
@@ -19,6 +21,7 @@ const data = [
 			{ name: 'Diapers', image: Diapers },
 			{ name: 'Clothes', image: Clothes },
 		],
+		color: '#60435F',
 	},
 	{
 		title: 'Meals/Foods',
@@ -26,11 +29,21 @@ const data = [
 			{ name: 'Water', image: Water },
 			{ name: 'Lunch', image: Lunch },
 		],
+		color: '#749759',
+	},
+	{
+		title: 'Miscellaneous',
+		icons: [
+			{ name: 'Icon', image: Custom },
+			{ name: 'Icon', image: Custom },
+			{ name: 'CUSTOM', image: New },
+		],
+		color: '#A21010',
 	},
 ];
 const AddActivityScreen = ({ navigation }) => {
 	return (
-		<View className="w-screen">
+		<View className="w-screen h-screen bg-white">
 			{data.map((item, index) => (
 				<Activities data={item} key={index} />
 			))}
