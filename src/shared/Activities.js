@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, FlatList } from 'react-native';
 import Activity from './Activity';
 
-const Activities = ({ data }) => {
+const Activities = ({ navigation, data }) => {
 	const [width, setWidth] = useState(0);
 
 	const find_dimensions = (layout) => {
@@ -17,7 +17,13 @@ const Activities = ({ data }) => {
 				numColumns="4"
 				data={data.icons}
 				renderItem={(item, index) => (
-					<Activity data={item} key={index} total={width} color={data.color} />
+					<Activity
+						data={item}
+						key={index}
+						total={width}
+						color={data.color}
+						navigation={navigation}
+					/>
 				)}
 				keyExtractor={(item, index) => index}
 				onLayout={(event) => {

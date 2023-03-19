@@ -45,7 +45,7 @@ const AddActivityScreen = ({ navigation }) => {
 	return (
 		<View className="w-screen h-screen bg-white">
 			{data.map((item, index) => (
-				<Activities data={item} key={index} />
+				<Activities data={item} key={index} navigation={navigation} />
 			))}
 		</View>
 	);

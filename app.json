@@ -39,6 +39,12 @@
 				{
 					"cameraPermission": "Allow LifePlan to access camera."
 				}
+			],
+			[
+				"expo-av",
+				{
+					"microphonePermission": "Allow LifePlan to access your microphone."
+				}
 			]
 		]
 	}

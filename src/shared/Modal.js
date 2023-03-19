@@ -6,7 +6,6 @@ const Modal = ({ route, navigation }) => {
 	LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
 	LogBox.ignoreAllLogs(); //Ignore all log notifications
 	const [params, setParams] = useState({
-		shown: false,
 		heading: '',
 		btnLeftTitle: '',
 		btnRightTitle: '',
@@ -20,6 +19,7 @@ const Modal = ({ route, navigation }) => {
 			// Post updated, do something with `route.params.post`
 			// For example, send the post to the server
 		}
+		console.log(route.params);
 	}, [route.params]);
 
 	useEffect(() => {
@@ -29,7 +29,6 @@ const Modal = ({ route, navigation }) => {
 			}, 50);
 		}
 	}, [shown]);
-
 	return (
 		<View className="w-screen h-full">
 			<Pressable
@@ -42,7 +41,7 @@ const Modal = ({ route, navigation }) => {
 			<View
 				className="w-screen items-center justify-center bg-white h-1/3 border"
 				style={{
-					display: params.shown ? 'flex' : 'none',
+					display: shown ? 'flex' : 'none',
 					position: 'absolute',
 					bottom: 0,
 					borderColor: '#60435F',
@@ -65,7 +64,7 @@ const Modal = ({ route, navigation }) => {
 						<Buttons
 							isDark={true}
 							title={params.btnRightTitle}
-							onPress={params.btnRight.navigateSignin}
+							onPress={params.btnRight}
 						/>
 					</View>
 				</View>

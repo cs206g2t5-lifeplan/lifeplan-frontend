@@ -8,7 +8,7 @@ import Modal from '../shared/Modal';
 const AccountScreen = ({ navigation }) => {
 	const [shown, setShown] = useState(false);
 
-	const navigateSignin = () => navigation.navigate('SignIn');
+	const navigate = () => navigation.navigate('SignIn');
 	const setFalse = () => setShown(false);
 
 	return (
@@ -75,10 +75,10 @@ const AccountScreen = ({ navigation }) => {
 					navigation.navigate('Modal', {
 						shown: { shown },
 						heading: 'Confirm Logout?',
-						btnRight: { navigateSignin },
+						btnRight: navigate,
 						btnLeftTitle: 'Cancel',
 						btnRightTitle: 'Logout',
-						btnLeft: { setFalse },
+						btnLeft: setFalse,
 					});
 				}}
 				isDark={false}
