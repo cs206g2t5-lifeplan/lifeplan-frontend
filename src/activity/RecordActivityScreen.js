@@ -12,9 +12,11 @@ import Record from '../../assets/record.png';
 import Buttons from '../shared/Buttons';
 import { Audio } from 'expo-av';
 import * as FileSystem from 'expo-file-system';
+import { Slider } from '@miblanchard/react-native-slider';
 
 const RecordActivityScreen = ({ route, navigation }) => {
 	const [recording, setRecording] = React.useState();
+	const [player, setPlayer] = React.useState();
 
 	async function startRecording() {
 		try {
@@ -56,9 +58,15 @@ const RecordActivityScreen = ({ route, navigation }) => {
 			}
 			await FileSystem.copyAsync({
 				from: uri,
-				to: dir,
+				to: `${dir}/${params.heading}.m4a`,
 			});
-			console.log(FileSystem.documentDirectory);
+
+			setPlayer(`${dir}/${params.heading}.m4a`);
+			// Your sound is playing!
+
+			// Dont forget to unload the sound from memory
+			// when you are done using the Sound object
+			// await sound.unloadAsync();
 		} catch (e) {
 			console.log(e);
 		}
@@ -70,6 +78,25 @@ const RecordActivityScreen = ({ route, navigation }) => {
 		const seconds = Math.round((minutes - minutesDisplay) * 60);
 		const secondsDisplay = seconds < 10 ? `0${seconds}` : seconds;
 		return `${minutesDisplay}:${secondsDisplay}`;
+	}
+
+	async function playSound() {
+		console.log('Loading Sound');
+		try {
+			const sound = new Audio.Sound();
+
+			await sound.loadAsync({
+				uri: player,
+				shouldPlay: true,
+			});
+			await sound.setPositionAsync(0);
+			await sound.playAsync();
+			sound.setOnPlaybackStatusUpdate(async (r) => {
+				console.log(r);
+			});
+		} catch (e) {
+			console.log(e);
+		}
 	}
 
 	LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
@@ -117,7 +144,7 @@ const RecordActivityScreen = ({ route, navigation }) => {
 		}
 	}, [shown]);
 
-	return (
+	return !player ? (
 		<View
 			className="w-screen h-full"
 			onLayout={(event) => find_dimesion_screen(event.nativeEvent.layout)}
@@ -179,6 +206,66 @@ const RecordActivityScreen = ({ route, navigation }) => {
 							onPress={params.btnRight}
 						/>
 					</View>
+				</View>
+			</View>
+		</View>
+	) : (
+		<View
+			className="w-screen h-full"
+			onLayout={(event) => find_dimesion_screen(event.nativeEvent.layout)}
+		>
+			<Pressable
+				className="w-screen h-full bg-black"
+				style={{ opacity: 0.4, display: shown ? 'flex' : 'none' }}
+				onPress={() => {
+					setShown(false);
+				}}
+			></Pressable>
+			<Pressable
+				className="absolute z-10"
+				style={{
+					top: (w1 - w2) / 2,
+					left: (w1 - w2) / 2,
+				}}
+				onLayout={(event) => find_dimesion_button(event.nativeEvent.layout)}
+				onPress={recording ? stopRecording : startRecording}
+			>
+				<Image source={Record} />
+				<Text
+					className="text-white text-xl absolute"
+					style={{
+						left: (w2 - w3) / 2,
+						top: (w1 - w3 + 50) / 2,
+					}}
+					onLayout={(event) => find_dimesion_text(event.nativeEvent.layout)}
+				>
+					{title}
+				</Text>
+			</Pressable>
+			<View
+				className="w-screen items-center justify-center bg-white h-1/3 border"
+				style={{
+					display: shown ? 'flex' : 'none',
+					position: 'absolute',
+					bottom: 0,
+					borderColor: '#60435F',
+					borderTopRightRadius: 20,
+					borderTopLeftRadius: 20,
+				}}
+			>
+				<Text className="font-bold text-m" style={{ color: '#60435F' }}>
+					{params.heading}
+				</Text>
+				<View className="mx-auto flex-row items-center justify-center w-screen">
+					<Pressable
+						className="w-screen h-full bg-black"
+						style={{ opacity: 0.4, display: shown ? 'flex' : 'none' }}
+						onPress={() => {
+							playSound();
+						}}
+					>
+						<Text>hi</Text>
+					</Pressable>
 				</View>
 			</View>
 		</View>
