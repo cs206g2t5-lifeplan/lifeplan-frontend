@@ -13,6 +13,8 @@ import Buttons from '../shared/Buttons';
 import { Audio } from 'expo-av';
 import * as FileSystem from 'expo-file-system';
 import { Slider } from '@miblanchard/react-native-slider';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { getData, storeData } from '../utils/storage';
 
 const RecordActivityScreen = ({ route, navigation }) => {
 	const [recording, setRecording] = React.useState();
@@ -80,22 +82,36 @@ const RecordActivityScreen = ({ route, navigation }) => {
 		return `${minutesDisplay}:${secondsDisplay}`;
 	}
 
-	async function playSound() {
-		console.log('Loading Sound');
-		try {
-			const sound = new Audio.Sound();
+	const [currentSound, setSound] = React.useState();
 
-			await sound.loadAsync({
-				uri: player,
-				shouldPlay: true,
-			});
-			await sound.setPositionAsync(0);
-			await sound.playAsync();
-			sound.setOnPlaybackStatusUpdate(async (r) => {
-				console.log(r);
-			});
-		} catch (e) {
-			console.log(e);
+	async function playSound() {
+		if (!isPlaying) {
+			setIsPlaying(true);
+			console.log('Loading Sound');
+			try {
+				const sound = new Audio.Sound();
+				setSound(sound);
+				await sound.loadAsync({
+					uri: player,
+					shouldPlay: true,
+				});
+				await sound.playAsync();
+				sound.setOnPlaybackStatusUpdate(async (r) => {
+					if (r.didJustFinish) {
+						setIsPlaying(false);
+					}
+				});
+			} catch (e) {
+				console.log(e);
+			}
+		} else {
+			console.log('Loading Sound');
+			setIsPlaying(false);
+			try {
+				await currentSound.pauseAsync();
+			} catch (e) {
+				console.log(e);
+			}
 		}
 	}
 
@@ -112,6 +128,7 @@ const RecordActivityScreen = ({ route, navigation }) => {
 	const [w2, setW2] = useState(0);
 	const [w3, setW3] = useState(0);
 	const [title, setTitle] = useState('Press to record');
+	const [isPlaying, setIsPlaying] = useState(false);
 
 	const find_dimesion_screen = (layout) => {
 		const { x, y, width, height } = layout;
@@ -189,24 +206,8 @@ const RecordActivityScreen = ({ route, navigation }) => {
 				}}
 			>
 				<Text className="font-bold text-m" style={{ color: '#60435F' }}>
-					{params.heading}
+					Press to record your voice!
 				</Text>
-				<View className="mx-auto flex-row items-center justify-center w-screen">
-					<View className="w-1/2 flex-1 items-center">
-						<Buttons
-							isDark={false}
-							title={params.btnLeftTitle}
-							onPress={() => setShown(false)}
-						/>
-					</View>
-					<View className="w-1/2 flex-1 items-center">
-						<Buttons
-							isDark={true}
-							title={params.btnRightTitle}
-							onPress={params.btnRight}
-						/>
-					</View>
-				</View>
 			</View>
 		</View>
 	) : (
@@ -256,16 +257,34 @@ const RecordActivityScreen = ({ route, navigation }) => {
 				<Text className="font-bold text-m" style={{ color: '#60435F' }}>
 					{params.heading}
 				</Text>
-				<View className="mx-auto flex-row items-center justify-center w-screen">
+				<View className="flex-row mx-auto items-center justify-center w-screen">
+					<View className="w-1/3 flex-1 items-center">
+						<Buttons
+							isDark={false}
+							title={params.btnLeftTitle}
+							onPress={() => setShown(false)}
+						/>
+					</View>
+
 					<Pressable
-						className="w-screen h-full bg-black"
-						style={{ opacity: 0.4, display: shown ? 'flex' : 'none' }}
+						className="rounded-full w-12 h-12 items-center justify-center mt-2"
+						style={{
+							display: shown ? 'flex' : 'none',
+							backgroundColor: '#D67AB1',
+						}}
 						onPress={() => {
 							playSound();
 						}}
 					>
-						<Text>hi</Text>
+						<MaterialCommunityIcons
+							name={isPlaying ? 'pause' : 'play'}
+							size={40}
+							color="#fff"
+						/>
 					</Pressable>
+					<View className="w-1/3 flex-1 items-center">
+						<Buttons isDark={true} title="Save" onPress={params.btnRight} />
+					</View>
 				</View>
 			</View>
 		</View>
