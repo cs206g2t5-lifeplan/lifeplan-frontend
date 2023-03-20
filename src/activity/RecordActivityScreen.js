@@ -14,7 +14,9 @@ import { Audio } from 'expo-av';
 import * as FileSystem from 'expo-file-system';
 import { Slider } from '@miblanchard/react-native-slider';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { getData, storeData } from '../utils/storage';
+import { storeData } from '../../utils/storage';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import RNDateTimePicker from '@react-native-community/datetimepicker';
 
 const RecordActivityScreen = ({ route, navigation }) => {
 	const [recording, setRecording] = React.useState();
@@ -161,6 +163,10 @@ const RecordActivityScreen = ({ route, navigation }) => {
 		}
 	}, [shown]);
 
+	const saveData = async () => {
+		await storeData('record', player);
+	};
+
 	return !player ? (
 		<View
 			className="w-screen h-full"
@@ -257,6 +263,7 @@ const RecordActivityScreen = ({ route, navigation }) => {
 				<Text className="font-bold text-m" style={{ color: '#60435F' }}>
 					{params.heading}
 				</Text>
+				<RNDateTimePicker mode="datetime" value={new Date()} />
 				<View className="flex-row mx-auto items-center justify-center w-screen">
 					<View className="w-1/3 flex-1 items-center">
 						<Buttons
@@ -283,7 +290,7 @@ const RecordActivityScreen = ({ route, navigation }) => {
 						/>
 					</Pressable>
 					<View className="w-1/3 flex-1 items-center">
-						<Buttons isDark={true} title="Save" onPress={params.btnRight} />
+						<Buttons isDark={true} title="Save" onPress={saveData} />
 					</View>
 				</View>
 			</View>
