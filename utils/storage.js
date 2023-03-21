@@ -12,9 +12,11 @@ export const getData = async (key) => {
 export const storeData = async (key, value) => {
 	try {
 		const item = await AsyncStorage.getItem(key);
-		let jsonValue = JSON.parse(value);
+		console.log(key, item);
+		let jsonValue = value;
+		console.log(jsonValue);
 		if (item) {
-			jsonValue = [...JSON.parse(item), ...jsonValue];
+			jsonValue = [...JSON.parse(item), ...value];
 		}
 		await AsyncStorage.setItem(key, jsonValue);
 		return true;

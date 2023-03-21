@@ -12,15 +12,15 @@ import Record from '../../assets/record.png';
 import Buttons from '../shared/Buttons';
 import { Audio } from 'expo-av';
 import * as FileSystem from 'expo-file-system';
-import { Slider } from '@miblanchard/react-native-slider';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { storeData } from '../../utils/storage';
-import DateTimePicker from '@react-native-community/datetimepicker';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 
 const RecordActivityScreen = ({ route, navigation }) => {
 	const [recording, setRecording] = React.useState();
 	const [player, setPlayer] = React.useState();
+	const [currDate, setCurrDate] = useState(new Date());
+	const [showItem, setShowItem] = useState(true);
 
 	async function startRecording() {
 		try {
@@ -60,17 +60,14 @@ const RecordActivityScreen = ({ route, navigation }) => {
 				console.log('creating directory');
 				await FileSystem.makeDirectoryAsync(dir);
 			}
+			let words = params.heading.split(' ');
+			console.log(`${dir}/${new Date()}-${words[2]}.m4a`);
 			await FileSystem.copyAsync({
 				from: uri,
-				to: `${dir}/${params.heading}.m4a`,
+				to: `${dir}/${new Date().getDate()}-${words[2]}.m4a`,
 			});
 
 			setPlayer(`${dir}/${params.heading}.m4a`);
-			// Your sound is playing!
-
-			// Dont forget to unload the sound from memory
-			// when you are done using the Sound object
-			// await sound.unloadAsync();
 		} catch (e) {
 			console.log(e);
 		}
@@ -164,7 +161,21 @@ const RecordActivityScreen = ({ route, navigation }) => {
 	}, [shown]);
 
 	const saveData = async () => {
-		await storeData('record', player);
+		await storeData(
+			currDate.toLocaleDateString() + ' ' + currDate.toLocaleTimeString(),
+			player
+		);
+	};
+
+	const changeDate = (event, selectedDate) => {
+		console.log(selectedDate);
+		// on cancel set date value to previous date
+		if (event?.type === 'dismissed') {
+			setCurrDate(currDate);
+			return;
+		}
+		setCurrDate(selectedDate);
+		setShowItem(false);
 	};
 
 	return !player ? (
@@ -263,7 +274,13 @@ const RecordActivityScreen = ({ route, navigation }) => {
 				<Text className="font-bold text-m" style={{ color: '#60435F' }}>
 					{params.heading}
 				</Text>
-				<RNDateTimePicker mode="datetime" value={new Date()} />
+				{showItem && (
+					<RNDateTimePicker
+						mode="datetime"
+						value={currDate}
+						onChange={(event, date) => changeDate(event, date)}
+					/>
+				)}
 				<View className="flex-row mx-auto items-center justify-center w-screen">
 					<View className="w-1/3 flex-1 items-center">
 						<Buttons
