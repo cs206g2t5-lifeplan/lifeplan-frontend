@@ -14,13 +14,15 @@ import { Audio } from 'expo-av';
 import * as FileSystem from 'expo-file-system';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { storeData } from '../../utils/storage';
-import RNDateTimePicker from '@react-native-community/datetimepicker';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 const RecordActivityScreen = ({ route, navigation }) => {
 	const [recording, setRecording] = React.useState();
 	const [player, setPlayer] = React.useState();
 	const [currDate, setCurrDate] = useState(new Date());
+	const [currTime, setCurrTime] = useState(new Date());
 	const [showItem, setShowItem] = useState(true);
+	const [showItem2, setShowItem2] = useState(true);
 
 	async function startRecording() {
 		try {
@@ -68,6 +70,8 @@ const RecordActivityScreen = ({ route, navigation }) => {
 			});
 
 			setPlayer(`${dir}/${params.heading}.m4a`);
+			setShowItem(true);
+			setShowItem2(true);
 		} catch (e) {
 			console.log(e);
 		}
@@ -131,17 +135,17 @@ const RecordActivityScreen = ({ route, navigation }) => {
 
 	const find_dimesion_screen = (layout) => {
 		const { x, y, width, height } = layout;
-		setW1(width);
+		if (w1 == 0) setW1(Math.floor(width));
 	};
 
 	const find_dimesion_button = (layout) => {
 		const { x, y, width, height } = layout;
-		setW2(width);
+		if (w2 == 0) setW2(Math.floor(width));
 	};
 
 	const find_dimesion_text = (layout) => {
 		const { x, y, width, height } = layout;
-		setW3(width);
+		if (w3 == 0) setW3(Math.floor(width));
 	};
 
 	useEffect(() => {
@@ -168,14 +172,23 @@ const RecordActivityScreen = ({ route, navigation }) => {
 	};
 
 	const changeDate = (event, selectedDate) => {
-		console.log(selectedDate);
 		// on cancel set date value to previous date
+		setShowItem(false);
 		if (event?.type === 'dismissed') {
 			setCurrDate(currDate);
 			return;
 		}
 		setCurrDate(selectedDate);
-		setShowItem(false);
+	};
+
+	const changeTime = (event, selectedDate) => {
+		// on cancel set date value to previous date
+		setShowItem2(false);
+		if (event?.type === 'dismissed') {
+			setCurrTime(currTime);
+			return;
+		}
+		setCurrTime(selectedDate);
 	};
 
 	return !player ? (
@@ -274,13 +287,25 @@ const RecordActivityScreen = ({ route, navigation }) => {
 				<Text className="font-bold text-m" style={{ color: '#60435F' }}>
 					{params.heading}
 				</Text>
-				{showItem && (
-					<RNDateTimePicker
-						mode="datetime"
-						value={currDate}
-						onChange={(event, date) => changeDate(event, date)}
+				{showItem2 && (
+					<DateTimePicker
+						value={currTime}
+						mode={'time'}
+						is24Hour={true}
+						display="default"
+						onChange={changeTime}
 					/>
 				)}
+				{showItem && (
+					<DateTimePicker
+						value={currDate}
+						mode={'date'}
+						is24Hour={true}
+						display="default"
+						onChange={changeDate}
+					/>
+				)}
+
 				<View className="flex-row mx-auto items-center justify-center w-screen">
 					<View className="w-1/3 flex-1 items-center">
 						<Buttons
