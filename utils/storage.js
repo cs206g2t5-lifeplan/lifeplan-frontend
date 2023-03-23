@@ -12,13 +12,12 @@ export const getData = async (key) => {
 export const storeData = async (key, value) => {
 	try {
 		const item = await AsyncStorage.getItem(key);
-		console.log(key, item);
 		let jsonValue = value;
-		console.log(jsonValue);
+
 		if (item) {
 			jsonValue = [...JSON.parse(item), ...value];
 		}
-		await AsyncStorage.setItem(key, jsonValue);
+		await AsyncStorage.setItem(key.toString(), JSON.stringify(jsonValue));
 		return true;
 	} catch (e) {
 		console.log(e);

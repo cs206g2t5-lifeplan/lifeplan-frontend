@@ -70,8 +70,8 @@ const RecordActivityScreen = ({ route, navigation }) => {
 			});
 
 			setPlayer(`${dir}/${params.heading}.m4a`);
-			setShowItem(true);
 			setShowItem2(true);
+			setShowItem(true);
 		} catch (e) {
 			console.log(e);
 		}
@@ -165,10 +165,9 @@ const RecordActivityScreen = ({ route, navigation }) => {
 	}, [shown]);
 
 	const saveData = async () => {
-		await storeData(
-			currDate.toLocaleDateString() + ' ' + currDate.toLocaleTimeString(),
-			player
-		);
+		if (await storeData(currDate.toLocaleDateString(), [currTime, player])) {
+			navigation.goBack();
+		}
 	};
 
 	const changeDate = (event, selectedDate) => {
@@ -191,6 +190,43 @@ const RecordActivityScreen = ({ route, navigation }) => {
 		setCurrTime(selectedDate);
 	};
 
+	const monthNames = [
+		'January',
+		'February',
+		'March',
+		'April',
+		'May',
+		'June',
+		'July',
+		'August',
+		'September',
+		'October',
+		'November',
+		'December',
+	];
+
+	const getTime = () => {
+		let hour =
+			currTime.getHours() < 10
+				? '0' + currTime.getHours()
+				: currTime.getHours();
+		let min =
+			currTime.getMinutes() < 10
+				? '0' + currTime.getMinutes()
+				: currTime.getMinutes();
+
+		return (
+			currDate.getDate() +
+			' ' +
+			monthNames[currDate.getMonth()] +
+			' ' +
+			currDate.getFullYear() +
+			' ' +
+			hour +
+			':' +
+			min
+		);
+	};
 	return !player ? (
 		<View
 			className="w-screen h-full"
@@ -305,7 +341,16 @@ const RecordActivityScreen = ({ route, navigation }) => {
 						onChange={changeDate}
 					/>
 				)}
-
+				<Text
+					className="font-bold text-m text-white rounded-full items-center justify-center mt-2 p-2"
+					style={{ backgroundColor: '#D67AB1' }}
+					onPress={() => {
+						setShowItem2(true);
+						setShowItem(true);
+					}}
+				>
+					{getTime()}
+				</Text>
 				<View className="flex-row mx-auto items-center justify-center w-screen">
 					<View className="w-1/3 flex-1 items-center">
 						<Buttons
