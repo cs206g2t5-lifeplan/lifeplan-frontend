@@ -88,7 +88,7 @@ const ViewActivityScreen = ({ navigation }) => {
 				<Timetable
 					// these two are required
 					items={items}
-					renderItem={(props) => <YourComponent {...props} />}
+					renderItem={(props) => <Task {...props} />}
 					// provide only one of these
 					date={date}
 					range={range}
@@ -107,7 +107,7 @@ const ViewActivityScreen = ({ navigation }) => {
 	);
 };
 
-function YourComponent({ style, item, title, daysTotal }) {
+function Task({ style, item, title, daysTotal }) {
 	return (
 		<View
 			style={{
@@ -117,7 +117,7 @@ function YourComponent({ style, item, title, daysTotal }) {
 				elevation: 5,
 			}}
 		>
-			<Text>{item.title}</Text>
+			<Text className="text-white p-4">{item.title}</Text>
 		</View>
 	);
 }
