@@ -24,6 +24,7 @@ const RecordActivityScreen = ({ route, navigation }) => {
 	const [currTime, setCurrTime] = useState(new Date());
 	const [showItem, setShowItem] = useState(true);
 	const [showItem2, setShowItem2] = useState(true);
+	const [uri, setUri] = useState();
 
 	async function startRecording() {
 		try {
@@ -64,13 +65,12 @@ const RecordActivityScreen = ({ route, navigation }) => {
 				await FileSystem.makeDirectoryAsync(dir);
 			}
 			let words = params.heading.split(' ');
-			console.log(`${dir}/${new Date()}-${words[2]}.m4a`);
 			await FileSystem.copyAsync({
 				from: uri,
 				to: `${dir}/${new Date().getDate()}-${words[2]}.m4a`,
 			});
 
-			setPlayer(`${dir}/${words[2]}.m4a`);
+			setPlayer(`${dir}/${new Date().getDate()}-${words[2]}.m4a`);
 			setShowItem2(true);
 			setShowItem(true);
 		} catch (e) {
