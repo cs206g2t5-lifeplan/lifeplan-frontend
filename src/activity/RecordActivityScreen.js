@@ -7,6 +7,7 @@ import {
 	LogBox,
 	Pressable,
 	Image,
+	Alert,
 } from 'react-native';
 import Record from '../../assets/record.png';
 import Buttons from '../shared/Buttons';
@@ -166,7 +167,15 @@ const RecordActivityScreen = ({ route, navigation }) => {
 
 	const saveData = async () => {
 		if (await storeData(currDate.toLocaleDateString(), [currTime, player])) {
-			navigation.goBack();
+			Alert.alert('Prompt Saved', 'Prompt has been saved successfully', [
+				{
+					text: 'Dismiss',
+					onPress: () => {
+						navigation.goBack();
+					},
+					style: 'cancel',
+				},
+			]);
 		}
 	};
 
