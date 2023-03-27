@@ -70,7 +70,7 @@ const RecordActivityScreen = ({ route, navigation }) => {
 				to: `${dir}/${new Date().getDate()}-${words[2]}.m4a`,
 			});
 
-			setPlayer(`${dir}/${params.heading}.m4a`);
+			setPlayer(`${dir}/${words[2]}.m4a`);
 			setShowItem2(true);
 			setShowItem(true);
 		} catch (e) {
@@ -166,7 +166,12 @@ const RecordActivityScreen = ({ route, navigation }) => {
 	}, [shown]);
 
 	const saveData = async () => {
-		if (await storeData(currDate.toLocaleDateString(), [currTime, player])) {
+		let words = params.heading.split(' ');
+		if (
+			await storeData(currDate.toLocaleDateString(), [
+				[currTime, player, words[2]],
+			])
+		) {
 			Alert.alert('Prompt Saved', 'Prompt has been saved successfully', [
 				{
 					text: 'Dismiss',

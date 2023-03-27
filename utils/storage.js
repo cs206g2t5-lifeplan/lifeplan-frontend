@@ -23,3 +23,12 @@ export const storeData = async (key, value) => {
 		console.log(e);
 	}
 };
+
+export const removeData = async (key) => {
+	try {
+		await AsyncStorage.removeItem(key);
+		return true;
+	} catch (e) {
+		console.log(e);
+	}
+};
