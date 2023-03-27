@@ -1,8 +1,16 @@
 import React, { useEffect } from 'react';
-import { View, Text, TextInput, Button, ScrollView } from 'react-native';
+import {
+	View,
+	Text,
+	TextInput,
+	Button,
+	ScrollView,
+	Pressable,
+} from 'react-native';
 import moment from 'moment';
 import Timetable from 'react-native-calendar-timetable';
 import { getData, removeData } from '../../utils/storage';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 const ViewActivityScreen = ({ navigation }) => {
 	const [date, setDate] = React.useState(new Date());
@@ -12,6 +20,7 @@ const ViewActivityScreen = ({ navigation }) => {
 	const range = { from, till };
 
 	const [items, setItems] = React.useState([]);
+	const [showItem, setShowItem] = React.useState(false);
 
 	useEffect(async () => {
 		const data = await getData(date.toLocaleDateString());
@@ -27,17 +36,74 @@ const ViewActivityScreen = ({ navigation }) => {
 		setItems(prompts);
 	}, []);
 
+	const changeDate = (event, selectedDate) => {
+		// on cancel set date value to previous date
+		setShowItem(false);
+		if (event?.type === 'dismissed') {
+			setDate(date);
+			return;
+		}
+		setDate(selectedDate);
+	};
+
+	const monthNames = [
+		'January',
+		'February',
+		'March',
+		'April',
+		'May',
+		'June',
+		'July',
+		'August',
+		'September',
+		'October',
+		'November',
+		'December',
+	];
+
+	const getTime = () => {
+		return (
+			date.getDate() +
+			' ' +
+			monthNames[date.getMonth()] +
+			' ' +
+			date.getFullYear()
+		);
+	};
+
 	return (
-		<ScrollView className="bg-white">
-			<Timetable
-				// these two are required
-				items={items}
-				renderItem={(props) => <YourComponent {...props} />}
-				// provide only one of these
-				date={date}
-				range={range}
-			/>
-		</ScrollView>
+		<View className="h-screen w-full bg-white flex-1 items-start">
+			<View className="h-16 bg-white">
+				<Text
+					className="font-bold text-m text-white rounded-full items-center justify-center mt-2 p-2 ml-4"
+					style={{ backgroundColor: '#D67AB1' }}
+					onPress={() => {
+						setShowItem(true);
+					}}
+				>
+					{getTime()}
+				</Text>
+			</View>
+			<ScrollView className="bg-white">
+				<Timetable
+					// these two are required
+					items={items}
+					renderItem={(props) => <YourComponent {...props} />}
+					// provide only one of these
+					date={date}
+					range={range}
+				/>
+				{showItem && (
+					<DateTimePicker
+						value={date}
+						mode={'date'}
+						is24Hour={true}
+						display="default"
+						onChange={changeDate}
+					/>
+				)}
+			</ScrollView>
+		</View>
 	);
 };
 

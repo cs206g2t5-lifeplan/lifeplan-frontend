@@ -9,6 +9,7 @@ const Activities = ({ navigation, data }) => {
 		const { x, y, width, height } = layout;
 		setWidth(width);
 	};
+
 	return (
 		<View className="w-full bg-white">
 			<Text className="font-bold text-2xl mt-4 ml-8">{data.title}</Text>
