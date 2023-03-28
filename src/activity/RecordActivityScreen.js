@@ -14,7 +14,7 @@ import Buttons from '../shared/Buttons';
 import { Audio } from 'expo-av';
 import * as FileSystem from 'expo-file-system';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { storeData } from '../../utils/storage';
+import { removeData, storeData } from '../../utils/storage';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 const RecordActivityScreen = ({ route, navigation }) => {
@@ -148,6 +148,11 @@ const RecordActivityScreen = ({ route, navigation }) => {
 		const { x, y, width, height } = layout;
 		if (w3 == 0) setW3(Math.floor(width));
 	};
+
+	// useEffect(() => {
+	// 	console.log('called');
+	// 	removeData(currDate.toLocaleDateString());
+	// }, []);
 
 	useEffect(() => {
 		if (route.params) {

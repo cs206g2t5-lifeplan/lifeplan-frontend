@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
 	View,
 	Text,
@@ -6,22 +6,27 @@ import {
 	ScrollView,
 	Image,
 	Pressable,
+	Alert,
 } from 'react-native';
 import Prompt from '../shared/Prompt';
 import Add from '../../assets/add.png';
 import Routine from '../../assets/routine.png';
 import Tips from '../../assets/tips.png';
+import { getData } from '../../utils/storage';
+import moment from 'moment';
+import { Audio } from 'expo-av';
 
 const HomeScreen = ({ navigation }) => {
 	const [width, setWidth] = useState(0);
 	const [shown, setShown] = useState(0);
+	const [prompts, setPrompts] = useState([]);
 
 	const find_dimensions = (layout) => {
 		const { x, y, width, height } = layout;
 		setWidth(width);
 	};
 
-	const activity = [
+	const [activity, setActivity] = useState([
 		{
 			color: '#A8DCD9',
 			heading: 'Assistance',
@@ -40,7 +45,117 @@ const HomeScreen = ({ navigation }) => {
 			content: '',
 			time: '11:37am',
 		},
-	];
+	]);
+
+	useEffect(() => {
+		async function fetchData() {
+			const data = await getData(new Date().toLocaleDateString());
+			if (data.length > 0) {
+				data.sort((a, b) => {
+					let d1 = moment(new Date(a[0])).toDate();
+					let d2 = moment(new Date(b[0])).toDate();
+					if (
+						d1.getHours() < d2.getHours() ||
+						(d1.getHours() == d2.getHours() &&
+							d1.getMinutes() < d2.getMinutes()) ||
+						(d1.getHours() == d2.getHours() &&
+							d1.getMinutes() == d2.getMinutes() &&
+							d1.getSeconds() < d2.getSeconds())
+					) {
+						return -1;
+					} else {
+						return 1;
+					}
+				});
+				console.log(data);
+				setPrompts(data);
+			}
+		}
+		fetchData();
+	}, []);
+
+	useEffect(() => {
+		updatePrompt();
+	}, [prompts]);
+
+	const updatePrompt = () => {
+		let data = prompts;
+		let now = new Date();
+		let ptr = 0;
+		for (let i = 0; i < data.length; i++) {
+			let d = moment(new Date(data[i][0])).toDate();
+			if (
+				now.getHours() == d.getHours() ||
+				(d.getHours() - now.getHours() == 1 &&
+					d.getMinutes() < now.getMinutes())
+			) {
+				ptr = i;
+				break;
+			}
+		}
+		let activities = [
+			{
+				color: '#A8DCD9',
+				heading: 'Assistance',
+				content: 'No assistance required',
+				time: '',
+			},
+			{
+				color: '#BFA3E2',
+				heading: 'Last Prompt:',
+				content: '',
+				time: '10:41am',
+			},
+			{
+				color: '#BFDCA8',
+				heading: 'Next Prompt:',
+				content: '',
+				time: '11:37am',
+			},
+		];
+		if (data.length) {
+			activities[0].content = data[ptr][2];
+			activities[0].time = 'Now';
+
+			if (data.length > ptr + 1) {
+				let d1 = moment(new Date(data[ptr + 1][0])).toDate();
+				activities[2].content = data[ptr + 1][2];
+				let time = d1.getHours() < 12 ? 'am' : 'pm';
+				activities[2].time =
+					(d1.getHours() % 12) + ':' + d1.getMinutes() + time;
+			}
+			if (ptr - 1 >= 0) {
+				let d2 = moment(new Date(data[ptr - 1][0])).toDate();
+				let time = d2.getHours() < 12 ? 'am' : 'pm';
+
+				activities[1].content = data[ptr - 1][2];
+				activities[1].time =
+					(d2.getHours() % 12) + ':' + d2.getMinutes() + time;
+			}
+			setActivity(activities);
+			Alert.alert(activities[0].content, 'Please complete the activity now!', [
+				{
+					text: 'OK!',
+					style: 'cancel',
+				},
+			]);
+			playSound(data[ptr][1]);
+		}
+	};
+
+	async function playSound(player) {
+		console.log('Loading Sound');
+		try {
+			const sound = new Audio.Sound();
+			await sound.loadAsync({
+				uri: player,
+				shouldPlay: true,
+			});
+			await sound.playAsync();
+		} catch (e) {
+			console.log(e);
+		}
+	}
 
 	return (
 		<View>
