@@ -48,8 +48,13 @@ const HomeScreen = ({ navigation }) => {
 	]);
 
 	useEffect(() => {
-		async function fetchData() {
-			const data = await getData(new Date().toLocaleDateString());
+		fetchData();
+	}, []);
+
+	async function fetchData() {
+		let data = [];
+		let interval = setInterval(async () => {
+			data = await getData(new Date().toLocaleDateString());
 			if (data.length > 0) {
 				data.sort((a, b) => {
 					let d1 = moment(new Date(a[0])).toDate();
@@ -67,12 +72,13 @@ const HomeScreen = ({ navigation }) => {
 						return 1;
 					}
 				});
-				console.log(data);
+			}
+			if (data.length != prompts.length) {
+				clearInterval(interval);
 				setPrompts(data);
 			}
-		}
-		fetchData();
-	}, []);
+		}, 2000);
+	}
 
 	useEffect(() => {
 		updatePrompt();
