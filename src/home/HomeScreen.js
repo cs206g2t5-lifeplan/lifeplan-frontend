@@ -108,14 +108,14 @@ const HomeScreen = ({ navigation }) => {
 			{
 				color: '#BFA3E2',
 				heading: 'Last Prompt:',
-				content: '',
-				time: '10:41am',
+				content: 'No assistance required',
+				time: '',
 			},
 			{
 				color: '#BFDCA8',
 				heading: 'Next Prompt:',
-				content: '',
-				time: '11:37am',
+				content: 'No assistance required',
+				time: '',
 			},
 		];
 		if (data.length) {
