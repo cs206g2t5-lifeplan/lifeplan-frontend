@@ -33,7 +33,7 @@ const SignUpScreen = ({ navigation }) => {
 			<Image className="absolute bottom-0 left-0" source={ellipseWhite} />
 			<Image className="absolute bottom-0 left-0" source={ellipsePink} />
 			<View className="z-10 h-screen w-screen flex-1 flex-col items-center pt-2">
-				<Text className="text-white font-bold text-6xl self-start pl-8 pt-32">
+				<Text className="text-white font-bold text-6xl self-start pl-8 pt-16">
 					LifePlan
 				</Text>
 				<Text className="text-black font-bold text-4xl self-start pl-8 pb-8">

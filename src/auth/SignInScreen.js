@@ -11,8 +11,18 @@ const SignInScreen = ({ navigation }) => {
 
 	return (
 		<View style={{ backgroundColor: '#A8DCD9' }} className="w-screen h-screen">
-			<Image className="absolute bottom-0 right-0" source={ellipseWhite} />
-			<Image className="absolute bottom-0 right-0" source={ellipsePink} />
+			<Image
+				className="absolute bottom-0 right-0 w-screen"
+				source={ellipseWhite}
+				resizeMethod="scale"
+				resizeMode="stretch"
+			/>
+			<Image
+				className="absolute bottom-0 right-0 w-screen"
+				source={ellipsePink}
+				resizeMethod="scale"
+				resizeMode="stretch"
+			/>
 			<View className="z-10 h-screen w-screen flex-1 flex-col items-center pt-8">
 				<Text className="text-white font-bold text-6xl self-start pl-8 pt-32">
 					LifePlan

@@ -87,13 +87,12 @@ const HomeScreen = ({ navigation }) => {
 	const updatePrompt = () => {
 		let data = prompts;
 		let now = new Date();
-		let ptr = 0;
+		let ptr = 1;
 		for (let i = 0; i < data.length; i++) {
 			let d = moment(new Date(data[i][0])).toDate();
 			if (
 				now.getHours() == d.getHours() ||
-				(d.getHours() - now.getHours() == 1 &&
-					d.getMinutes() < now.getMinutes())
+				Math.abs(d.getHours() - now.getHours()) == 1
 			) {
 				ptr = i;
 				break;
