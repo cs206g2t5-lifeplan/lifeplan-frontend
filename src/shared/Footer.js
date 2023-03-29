@@ -6,7 +6,7 @@ import Home from '../../assets/home.png';
 import Care from '../../assets/care.png';
 import Emergency from '../../assets/emergency.png';
 import AccountScreen from '../home/AccountScreen';
-import MessagesScreen from '../home/MessagesScreen';
+import EmergencyScreen from '../home/EmergencyScreen';
 import HomeStack from './HomeStack';
 
 const Tab = createBottomTabNavigator();
@@ -67,7 +67,7 @@ const Footer = () => {
 			/>
 			<Tab.Screen
 				name="Emergency"
-				component={MessagesScreen}
+				component={EmergencyScreen}
 				options={{
 					tabBarIcon: ({ color, size }) => (
 						<Image source={Emergency} style={{ width: 36, height: 28 }} />
