@@ -87,37 +87,18 @@ const HomeScreen = ({ navigation }) => {
 	const updatePrompt = () => {
 		let data = prompts;
 		let now = new Date();
-		let ptr = 1;
+		let ptr = 0;
 		for (let i = 0; i < data.length; i++) {
 			let d = moment(new Date(data[i][0])).toDate();
 			if (
-				now.getHours() == d.getHours() ||
-				Math.abs(d.getHours() - now.getHours()) == 1
+				now.getHours() == d.getHours() &&
+				now.getMinutes() >= d.getMinutes()
 			) {
 				ptr = i;
 				break;
 			}
 		}
-		let activities = [
-			{
-				color: '#A8DCD9',
-				heading: 'Assistance',
-				content: 'No assistance required',
-				time: '',
-			},
-			{
-				color: '#BFA3E2',
-				heading: 'Last Prompt:',
-				content: 'No assistance required',
-				time: '',
-			},
-			{
-				color: '#BFDCA8',
-				heading: 'Next Prompt:',
-				content: 'No assistance required',
-				time: '',
-			},
-		];
+		let activities = activity.slice();
 		if (data.length) {
 			activities[0].content = data[ptr][2];
 			activities[0].time = 'Now';
@@ -137,14 +118,27 @@ const HomeScreen = ({ navigation }) => {
 				activities[1].time =
 					(d2.getHours() % 12) + ':' + d2.getMinutes() + time;
 			}
+			setTimeout(() => {
+				let activities = activity.slice();
+
+				activities[0].color = '#FFE27A';
+				console.log('called');
+				setActivity(activities);
+			}, 5000);
+			setTimeout(() => {
+				let activities = activity.slice();
+
+				activities[0].color = '#F06868';
+				setActivity(activities);
+			}, 10000);
 			setActivity(activities);
-			Alert.alert(activities[0].content, 'Please complete the activity now!', [
-				{
-					text: 'OK!',
-					style: 'cancel',
-				},
-			]);
-			playSound(data[ptr][1]);
+			// Alert.alert(activities[0].content, 'Please complete the activity now!', [
+			// 	{
+			// 		text: 'OK!',
+			// 		style: 'cancel',
+			// 	},
+			// ]);
+			// playSound(data[ptr][1]);
 		}
 	};
 

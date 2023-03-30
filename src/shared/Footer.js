@@ -66,7 +66,7 @@ const Footer = () => {
 				}}
 			/>
 			<Tab.Screen
-				name="Emergency"
+				name="Safe Return"
 				component={EmergencyScreen}
 				options={{
 					tabBarIcon: ({ color, size }) => (

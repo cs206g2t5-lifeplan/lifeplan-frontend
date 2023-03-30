@@ -24,7 +24,7 @@ const SignInScreen = ({ navigation }) => {
 				resizeMode="stretch"
 			/>
 			<View className="z-10 h-screen w-screen flex-1 flex-col items-center pt-8">
-				<Text className="text-white font-bold text-6xl self-start pl-8 pt-32">
+				<Text className="text-white font-bold text-6xl self-start pl-8 pt-16">
 					LifePlan
 				</Text>
 				<Text className="text-black font-bold text-4xl self-start pl-8 pt-4 pb-4">
